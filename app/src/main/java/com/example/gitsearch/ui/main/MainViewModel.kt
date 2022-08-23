@@ -9,6 +9,6 @@ class MainViewModel(private val mainRepository: MainRepository)
 
     fun getUsers() = mainRepository.getUsers()
     fun searchUsers(username:String) = mainRepository.searchUsers(username)
+    fun loadMore() = mainRepository.loadMore()
 
-    //fun addQuote(user: User) = mainRepository.addQuote(user)
 }

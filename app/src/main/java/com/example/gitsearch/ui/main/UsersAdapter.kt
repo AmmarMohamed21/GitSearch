@@ -1,5 +1,6 @@
 package com.example.gitsearch.ui.main
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,6 +24,9 @@ class UsersAdapter(private val usersList: List<User>) : RecyclerView.Adapter<Use
         val user:User = usersList[position]
         holder.usernameText.text = user.username
         holder.avatarImage.loadImage(user.avatarUrl)
+        holder.itemView.setOnClickListener{
+            Log.v("",user.username)
+        }
     }
 
     override fun getItemCount(): Int {

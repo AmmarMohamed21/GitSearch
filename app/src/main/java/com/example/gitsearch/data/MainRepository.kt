@@ -1,16 +1,25 @@
 package com.example.gitsearch.data
 
+import android.util.Log
+
 class MainRepository private constructor(private val usersDao: UsersDao) {
 
-    // This may seem redundant.
-    // Imagine a code which also updates and checks the backend.
-//    fun addQuote(user: User) {
-//        usersDao.addQuote(user)
-//    }
+    private var _currentPageNo=1
+    private var _currentSearchedName=""
 
     fun getUsers() = usersDao.getUsers()
 
-    fun searchUsers(username: String) = usersDao.searchForUsers(username)
+    fun searchUsers(username: String) {
+        _currentPageNo=1
+        _currentSearchedName=username
+        usersDao.searchForUsers(username, "1")
+    }
+    fun loadMore() {
+        _currentPageNo++
+        Log.v("",_currentPageNo.toString())
+        usersDao.searchForUsers(_currentSearchedName, _currentPageNo.toString(), isLoadMore = true)
+    }
+
 
 
     companion object {

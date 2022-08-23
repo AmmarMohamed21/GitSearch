@@ -1,16 +1,21 @@
 package com.example.gitsearch.ui.main
 
-import androidx.lifecycle.ViewModelProvider
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.gitsearch.utilities.InjectorUtils
+import androidx.recyclerview.widget.RecyclerView
 import com.example.gitsearch.databinding.FragmentMainBinding
+import com.example.gitsearch.utilities.InjectorUtils
+
 
 class MainFragment : Fragment() {
 
@@ -38,7 +43,6 @@ class MainFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        // TODO: Use the ViewModel
         val factory = InjectorUtils.provideQuotesViewModelFactory()
         val viewModel = ViewModelProvider(this, factory).get(MainViewModel::class.java)
         viewModel.getUsers().observe(viewLifecycleOwner, Observer{ users ->
@@ -46,14 +50,24 @@ class MainFragment : Fragment() {
             recyclerview.layoutManager = LinearLayoutManager(this.context)
             val adapter = UsersAdapter(users)
             recyclerview.adapter = adapter
+            if(users.size>30)
+            {
+                recyclerview.scrollToPosition(users.size-31)
+            }
+        })
+
+
+        binding.recyclerview.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (!recyclerView.canScrollVertically(1) && newState==RecyclerView.SCROLL_STATE_IDLE) {
+                    viewModel.loadMore()
+                }
+            }
         })
 
         binding.buttonSearchUsers.setOnClickListener {
-//            val user = User(binding.editTextSearch.text.toString(), "author")
-//            viewModel.addQuote(user)
-            Log.v("", "clicked")
             viewModel.searchUsers(binding.editTextSearch.text.toString())
-            //binding.editTextSearch.setText("")
         }
     }
 
