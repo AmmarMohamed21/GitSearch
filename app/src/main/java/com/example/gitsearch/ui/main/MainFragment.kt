@@ -1,6 +1,7 @@
 package com.example.gitsearch.ui.main
 
 import android.os.Bundle
+import android.os.Parcelable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,8 @@ import com.example.gitsearch.utilities.InjectorUtils
 
 
 class MainFragment : Fragment() {
+
+    private var recyclerViewState:Parcelable? = null
 
     companion object {
         fun newInstance() = MainFragment()
@@ -37,6 +40,8 @@ class MainFragment : Fragment() {
         return binding.root
     }
 
+
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
@@ -48,10 +53,10 @@ class MainFragment : Fragment() {
             val adapter = UsersAdapter(users)
             recyclerview.adapter = adapter
 
-            //Prevent scrolling back to top
-            if(users.size>30)
+            //Return to scrolling position
+            if(recyclerViewState != null)
             {
-                recyclerview.scrollToPosition(users.size-36)
+                recyclerview.layoutManager?.onRestoreInstanceState(recyclerViewState)
             }
         })
 
@@ -64,6 +69,7 @@ class MainFragment : Fragment() {
                     //load more only if count is divisible by 30
                     if(recyclerView.layoutManager?.itemCount != null && recyclerView.layoutManager?.itemCount!!%30 == 0)
                     {
+                        recyclerViewState = recyclerView.layoutManager!!.onSaveInstanceState()
                         viewModel.loadMore()
                     }
                 }
