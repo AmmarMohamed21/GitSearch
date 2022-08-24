@@ -1,6 +1,7 @@
 package com.example.gitsearch.ui.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -50,7 +51,7 @@ class MainFragment : Fragment() {
             //Prevent scrolling back to top
             if(users.size>30)
             {
-                recyclerview.scrollToPosition(users.size-35)
+                recyclerview.scrollToPosition(users.size-36)
             }
         })
 
@@ -58,8 +59,13 @@ class MainFragment : Fragment() {
         binding.recyclerview.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
-                if (!recyclerView.canScrollVertically(1) && newState==RecyclerView.SCROLL_STATE_IDLE) {
-                    viewModel.loadMore()
+                if (!recyclerView.canScrollVertically(1) && newState==RecyclerView.SCROLL_STATE_IDLE)
+                {
+                    //load more only if count is divisible by 30
+                    if(recyclerView.layoutManager?.itemCount != null && recyclerView.layoutManager?.itemCount!!%30 == 0)
+                    {
+                        viewModel.loadMore()
+                    }
                 }
             }
         })

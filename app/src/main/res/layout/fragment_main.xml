@@ -6,6 +6,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingHorizontal="5dp"
+    android:paddingVertical="5dp"
     android:orientation="vertical"
     android:id="@+id/search_screen"
     tools:context=".ui.main.MainFragment">
@@ -24,37 +26,39 @@
             android:layout_marginBottom="8dp"
             android:backgroundTint="@color/github_color"
             app:layout_constraintTop_toTopOf="@+id/search_screen"
-            app:layout_constraintStart_toStartOf="@+id/search_screen"
+            app:layout_constraintStart_toStartOf="parent"
             android:hint="username"
             app:layout_constraintWidth_percent="0.65"
              />
 
-        <Button
-            android:id="@+id/button_search_users"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:backgroundTint="@color/github_color"
-            android:text="Search"
-            android:textColor="@android:color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintBottom_toBottomOf="@+id/editText_search"
-            app:layout_constraintStart_toEndOf="@+id/editText_search"
-            app:layout_constraintTop_toTopOf="@+id/editText_search"
-            app:layout_constraintWidth_percent="0.25" />
+    <Button
+        android:id="@+id/button_search_users"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:maxLines="1"
+        android:backgroundTint="@color/github_color"
+        android:text="Search"
+        android:textColor="@android:color/white"
+        app:layout_constraintStart_toEndOf="@+id/editText_search"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/editText_search"
+        app:layout_constraintTop_toTopOf="@+id/editText_search"
+        />
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:itemCount="5"
+        tools:itemCount="0"
         tools:listitem="@layout/card_view_design"
         app:layout_constraintStart_toStartOf="@+id/editText_search"
         app:layout_constraintTop_toBottomOf="@+id/editText_search"
+        android:scrollbars="vertical"
+        android:scrollbarSize="5dp"
         />
 
 

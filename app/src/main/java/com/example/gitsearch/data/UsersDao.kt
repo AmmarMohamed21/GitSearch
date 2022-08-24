@@ -49,14 +49,14 @@ class UsersDao constructor(private val retrofitService: RetrofitService) {
             }
 
             override fun onFailure(call: Call<User>, t: Throwable) {
-                val errorUser:User = User("Check your internet connection and try again.","","","",null,null,"")
+                val errorUser:User = User("Check your internet connection and try again.","","","",0,0,"")
                 userProfile.postValue(errorUser)
             }
         })
     }
 
     fun clearProfileData(){
-        val cleanUser:User = User("","","Loading...","",null,null,"")
+        val cleanUser:User = User("","","Loading...","",0,0,"")
         userProfile.postValue(cleanUser)
     }
 

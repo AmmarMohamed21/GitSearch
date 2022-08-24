@@ -33,16 +33,15 @@ class ProfileFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
         val factory = InjectorUtils.provideQuotesViewModelFactory()
         val viewModel = ViewModelProvider(this, factory)[MainViewModel::class.java]
         viewModel.getUserProfile().observe(viewLifecycleOwner, Observer{ user ->
             binding.username.text = user.username
             binding.avatar.loadImage(user.avatarUrl)
             binding.name.text = user.name
-            binding.bio.text = user.bio
-            binding.following.text = "${user.followers} followers . ${user.following} following"
-            binding.location.text = user.location
+            binding.bio.text = user.bio ?: ""
+            binding.following.text = "${user.followers?: "0"} followers . ${user.following?:"0"} following"
+            binding.location.text = user.location ?: ""
 
         })
         viewModel.loadUserProfile(userId!!)
