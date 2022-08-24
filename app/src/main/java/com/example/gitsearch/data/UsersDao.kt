@@ -56,7 +56,7 @@ class UsersDao constructor(private val retrofitService: RetrofitService) {
     }
 
     fun clearProfileData(){
-        val cleanUser:User = User("Loading...","","","",null,null,"")
+        val cleanUser:User = User("","","Loading...","",null,null,"")
         userProfile.postValue(cleanUser)
     }
 
