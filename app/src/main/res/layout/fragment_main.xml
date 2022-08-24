@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
+    app:navGraph="@navigation/nav_graph"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:id="@+id/searchScreen"
+    android:id="@+id/search_screen"
     tools:context=".ui.main.MainFragment">
 
         <EditText
@@ -22,8 +23,8 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:backgroundTint="@color/github_color"
-            app:layout_constraintTop_toTopOf="@+id/searchScreen"
-            app:layout_constraintStart_toStartOf="@+id/searchScreen"
+            app:layout_constraintTop_toTopOf="@+id/search_screen"
+            app:layout_constraintStart_toStartOf="@+id/search_screen"
             android:hint="username"
             app:layout_constraintWidth_percent="0.65"
              />

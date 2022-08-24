@@ -1,13 +1,9 @@
 package com.example.gitsearch.ui.main
 
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -44,15 +40,17 @@ class MainFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         val factory = InjectorUtils.provideQuotesViewModelFactory()
-        val viewModel = ViewModelProvider(this, factory).get(MainViewModel::class.java)
+        val viewModel = ViewModelProvider(this, factory)[MainViewModel::class.java]
         viewModel.getUsers().observe(viewLifecycleOwner, Observer{ users ->
             val recyclerview = binding.recyclerview
             recyclerview.layoutManager = LinearLayoutManager(this.context)
             val adapter = UsersAdapter(users)
             recyclerview.adapter = adapter
+
+            //Prevent scrolling back to top
             if(users.size>30)
             {
-                recyclerview.scrollToPosition(users.size-31)
+                recyclerview.scrollToPosition(users.size-35)
             }
         })
 

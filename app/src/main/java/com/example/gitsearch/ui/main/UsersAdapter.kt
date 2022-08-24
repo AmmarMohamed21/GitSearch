@@ -1,10 +1,13 @@
 package com.example.gitsearch.ui.main
 
+import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gitsearch.R
 import com.example.gitsearch.data.User
@@ -25,7 +28,9 @@ class UsersAdapter(private val usersList: List<User>) : RecyclerView.Adapter<Use
         holder.usernameText.text = user.username
         holder.avatarImage.loadImage(user.avatarUrl)
         holder.itemView.setOnClickListener{
-            Log.v("",user.username)
+            val bundle = Bundle()
+            bundle.putString("user_id", user.username)
+            holder.itemView.findNavController().navigate(R.id.action_mainFragment_to_profileFragment, bundle)
         }
     }
 

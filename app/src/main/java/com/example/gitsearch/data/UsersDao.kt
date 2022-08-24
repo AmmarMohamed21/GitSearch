@@ -13,6 +13,7 @@ import retrofit2.http.QueryMap
 class UsersDao constructor(private val retrofitService: RetrofitService) {
     private var usersList = mutableListOf<User>()
     private val users = MutableLiveData<List<User>>()
+    private val userProfile = MutableLiveData<User>()
 
     init {
         users.value = usersList
@@ -39,5 +40,27 @@ class UsersDao constructor(private val retrofitService: RetrofitService) {
         })
     }
 
+    fun getUserProfile(username: String)
+    {
+        val response = retrofitService.getUserProfile(username)
+        response.enqueue(object : Callback<User> {
+            override fun onResponse(call: Call<User>, response: Response<User>) {
+                userProfile.postValue(response.body())
+            }
+
+            override fun onFailure(call: Call<User>, t: Throwable) {
+                val errorUser:User = User("Check your internet connection and try again.","","","",null,null,"")
+                userProfile.postValue(errorUser)
+            }
+        })
+    }
+
+    fun clearProfileData(){
+        val cleanUser:User = User("Loading...","","","",null,null,"")
+        userProfile.postValue(cleanUser)
+    }
+
     fun getUsers() = users as LiveData<List<User>>
+    fun getUserProfile () = userProfile as LiveData<User>
+
 }
