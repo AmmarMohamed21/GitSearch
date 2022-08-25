@@ -4,7 +4,6 @@ import com.example.gitsearch.services.RetrofitService
 
 class Database private constructor() {
 
-    // All the DAOs go here!
     var usersDao = UsersDao(RetrofitService.getInstance())
         private set
 

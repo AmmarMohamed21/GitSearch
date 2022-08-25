@@ -10,3 +10,4 @@ data class User(@SerializedName("login") val username: String,
                 @SerializedName("following") val following: Int?,
                 @SerializedName("location") val location: String?,
 )
+

@@ -1,30 +1,18 @@
 package com.example.gitsearch.data
 
-import android.util.Log
+import retrofit2.Call
 
 class MainRepository private constructor(private val usersDao: UsersDao) {
 
-    private var _currentPageNo=1
-    private var _currentSearchedName=""
 
-    fun getUsers() = usersDao.getUsers()
-
-    fun getUserProfile() = usersDao.getUserProfile()
-
-    fun searchUsers(username: String) {
-        _currentPageNo=1
-        _currentSearchedName=username
-        usersDao.searchForUsers(username, "1")
-    }
-    fun loadMore() {
-        _currentPageNo++
-        usersDao.searchForUsers(_currentSearchedName, _currentPageNo.toString(), isLoadMore = true)
+    fun loadUserProfile(username: String): Call<User> {
+        return usersDao.getUserProfile(username)
     }
 
-    fun loadUserProfile(username: String) = usersDao.getUserProfile(username)
-
-    fun clearProfileData() = usersDao.clearProfileData()
-
+    fun getSearchUsers(queryMap: Map<String, String>): Call<UsersList>
+    {
+        return usersDao.searchForUsers(queryMap)
+    }
 
 
     companion object {

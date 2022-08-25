@@ -17,6 +17,11 @@ import com.example.gitsearch.utilities.InjectorUtils
 
 class MainFragment : Fragment() {
 
+    val viewModel: MainViewModel by lazy{
+        val factory = InjectorUtils.provideQuotesViewModelFactory()
+        ViewModelProvider(this, factory)[MainViewModel::class.java]
+    }
+
     private var recyclerViewState:Parcelable? = null
 
     companion object {
@@ -29,34 +34,32 @@ class MainFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
+    private val adapter = UsersAdapter(emptyList())
 
-    private lateinit var viewModel: MainViewModel
+    //private lateinit var viewModel: MainViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
         _binding = FragmentMainBinding.inflate(inflater, container, false)
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val recyclerview = binding.recyclerview
+        //recyclerview.layoutManager = LinearLayoutManager(this.context)
+        recyclerview.adapter = adapter
 
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        val factory = InjectorUtils.provideQuotesViewModelFactory()
-        val viewModel = ViewModelProvider(this, factory)[MainViewModel::class.java]
         viewModel.getUsers().observe(viewLifecycleOwner, Observer{ users ->
-            val recyclerview = binding.recyclerview
-            recyclerview.layoutManager = LinearLayoutManager(this.context)
-            val adapter = UsersAdapter(users)
-            recyclerview.adapter = adapter
+            adapter.updateList(users)
 
             //Return to scrolling position
             if(recyclerViewState != null)
             {
-                recyclerview.layoutManager?.onRestoreInstanceState(recyclerViewState)
+                binding.recyclerview.layoutManager?.onRestoreInstanceState(recyclerViewState)
             }
         })
 
@@ -77,8 +80,16 @@ class MainFragment : Fragment() {
         })
 
         binding.buttonSearchUsers.setOnClickListener {
-            viewModel.searchUsers(binding.editTextSearch.text.toString())
+            viewModel.searchUsers(binding.editTextSearch.text.toString(), false)
         }
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+//        val factory = InjectorUtils.provideQuotesViewModelFactory()
+//        val viewModel = ViewModelProvider(this, factory)[MainViewModel::class.java]
+
     }
 
 }
