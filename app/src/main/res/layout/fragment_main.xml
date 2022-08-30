@@ -12,6 +12,7 @@
     android:id="@+id/search_screen"
     tools:context=".ui.main.MainFragment">
 
+
         <EditText
             android:id="@+id/editText_search"
             android:layout_height="wrap_content"
@@ -62,7 +63,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:scrollbars="vertical"
         android:scrollbarSize="5dp"
+        android:visibility="visible"
         />
 
-
+    <include android:id="@+id/loading" layout="@layout/loading_indicator"/>
+    <include android:id="@+id/no_internet" layout="@layout/no_internet"/>
+    <include android:id="@+id/no_results" layout="@layout/no_results"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">GitSearch</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="profile">Profile</string>
+    <string name="no_users">No users found</string>
+    <string name="no_internet">No internet connection, please try again later.</string>
 </resources>

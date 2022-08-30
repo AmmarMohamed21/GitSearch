@@ -21,10 +21,9 @@ class MainViewModel(private val mainRepository: MainRepository)
     private var _currentSearchedName=""
 
     fun getUsers() = users as LiveData<List<User>>
-    fun searchUsers(username:String, isLoadMore:Boolean = false) {
-        _currentPageNo=1
+    fun searchUsers(username:String, pageNo:Int, isLoadMore:Boolean = false) {
         _currentSearchedName=username
-        val queryMap = mapOf<String,String>("q" to username, "page" to _currentPageNo.toString())
+        val queryMap = mapOf<String,String>("q" to username, "page" to pageNo.toString())
         val response = mainRepository.getSearchUsers(queryMap)
         response.enqueue(object : Callback<UsersList> {
             override fun onResponse(call: Call<UsersList>, response: Response<UsersList>) {
@@ -42,7 +41,7 @@ class MainViewModel(private val mainRepository: MainRepository)
     }
     fun loadMore() {
         _currentPageNo++
-        searchUsers(_currentSearchedName, true)
+        searchUsers(_currentSearchedName, _currentPageNo, true)
     }
 
     fun loadUserProfile(username:String){
